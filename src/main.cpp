@@ -5,6 +5,8 @@
 //#include "sensors/thermometer.h"
 #include "core/buttons.h"
 #include "io/Leds.h"
+#include "lib/time/Time.h"
+#include "lib/time/TimeAlarms.h"
 //Controls::WaterControl* _waterControl;
 Sensors::MoustureSensor* _moistureSensor;
 //Sensors::Thermometer* _tempSensor;
