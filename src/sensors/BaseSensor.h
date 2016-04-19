@@ -16,6 +16,7 @@ public:
 	virtual ~BaseSensor();
 	BaseSensor(unsigned char, String);
   virtual String getName();
+	virtual int getValue() = 0;
   virtual void updateCalibrationValues() = 0;
 protected:
 	unsigned int _pin, _minValue, _maxValue ;

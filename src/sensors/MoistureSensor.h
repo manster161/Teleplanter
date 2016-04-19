@@ -20,6 +20,7 @@ public:
 	bool isCalibrationPushed();
 	virtual void updateCalibrationValues();
   virtual String getName();
+	virtual int getValue();
 
 };
 

@@ -14,7 +14,7 @@ namespace Sensors {
 
 MoustureSensor::MoustureSensor(unsigned int pin) :  BaseSensor (pin, "MoistureSensor") {
 
-	// TODO Auto-generated constructor stub
+	
 
 }
 
@@ -31,6 +31,11 @@ void MoustureSensor::updateCalibrationValues(){
 		if (currentValue < _minValue){
 			_minValue = currentValue;
 		}
+}
+
+int MoustureSensor::getValue(){
+	unsigned int val = analogRead(Pins::MOISTURE_SENSOR_PIN);
+	return val;
 }
 
 
