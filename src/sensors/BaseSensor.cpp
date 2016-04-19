@@ -29,6 +29,9 @@ String BaseSensor::getName(){
 	return _name;
 }
 
+unsigned char BaseSensor::getPin(){
+	return _pin;
+}
 
 
 

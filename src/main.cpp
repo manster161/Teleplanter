@@ -7,10 +7,10 @@
 #include "io/Leds.h"
 #include "lib/time/Time.h"
 #include "lib/time/TimeAlarms.h"
-#include "sensors/Thermometer.h"
+#include "sensors/ThermometerHumidity.h"
 //Controls::WaterControl* _waterControl;
 Sensors::MoustureSensor* _moistureSensor;
-Sensors::Thermometer* _thermometer;
+Sensors::ThermometerHumidity* _thermometer;
 //Sensors::Thermometer* _tempSensor;
 Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
@@ -24,7 +24,7 @@ void setup()
   // initialize LED digital pin as an output.
   //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
   _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
-  _thermometer = new Sensors::Thermometer(Pins::THERMOMETER_SENSOR_PIN);
+  _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
   _leds = new Outputs::Leds();
   //_tempSensor = new Sensors::Thermometer(Pins::THERMOMETER_SENSOR_PIN, 15, 25);
 }
@@ -36,10 +36,17 @@ void loop()
       _moistureSensor->updateCalibrationValues();
     }
 
+
     Serial.print("Moisture : ");
     Serial.println(_moistureSensor->getValue());
-    Serial.print("Temp : ");
-    Serial.println(_thermometer->getValue());
+    Serial.println("");
 
-  delay(2000);
+    _thermometer->readSensorValues();
+    Serial.print("Temp:");
+    Serial.println(_thermometer->getTemp(), DEC);
+    Serial.println("");
+    Serial.print("Humidity: ");
+    Serial.println(_thermometer->getHumidity(), DEC);
+    Serial.println("");
+    delay(5000);
 }

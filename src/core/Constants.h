@@ -10,11 +10,11 @@
 #include "arduino.h"
 
 namespace Pins {
-	const unsigned char WATER_CONTROL_PIN = 1;
+	const unsigned char WATER_CONTROL_PIN = 11;
 	const unsigned char MOISTURE_SENSOR_PIN = A0;
 	const unsigned char LIGHT_CONTROL_PIN = 3;
 	const unsigned char FAN_CONTROL_PIN = 4;
-	const unsigned char THERMOMETER_SENSOR_PIN = A1;
+	const unsigned char THERMOMETER_SENSOR_PIN = 2;
 	const unsigned char PH_SENSOR_PIN = 5;
 
 	const unsigned char MOISTURE_SENSOR_CALIBRATION_PIN = 10;
