@@ -8,6 +8,7 @@
 #include "lib/time/Time.h"
 #include "lib/time/TimeAlarms.h"
 #include "sensors/ThermometerHumidity.h"
+#include "core/Configuration.h"
 //Controls::WaterControl* _waterControl;
 Sensors::MoustureSensor* _moistureSensor;
 Sensors::ThermometerHumidity* _thermometer;
@@ -15,8 +16,6 @@ Sensors::ThermometerHumidity* _thermometer;
 Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
 
-
-const unsigned char _setup = Configurations::TP101;
 
 void setup()
 {
@@ -37,16 +36,19 @@ void loop()
     }
 
 
-    Serial.print("Moisture : ");
-    Serial.println(_moistureSensor->getValue());
-    Serial.println("");
 
-    _thermometer->readSensorValues();
-    Serial.print("Temp:");
-    Serial.println(_thermometer->getTemp(), DEC);
-    Serial.println("");
-    Serial.print("Humidity: ");
-    Serial.println(_thermometer->getHumidity(), DEC);
-    Serial.println("");
-    delay(5000);
+    delay(Configuration::SERIAL_UPDATE_TIME);
+}
+
+void printValues() {
+  Serial.print("Moisture : ");
+  Serial.println(_moistureSensor->getValue());
+  Serial.println("");
+  _thermometer->readSensorValues();
+  Serial.print("Temp:");
+  Serial.println(_thermometer->getTemp(), DEC);
+  Serial.println("");
+  Serial.print("Humidity: ");
+  Serial.println(_thermometer->getHumidity(), DEC);
+  Serial.println("");
 }

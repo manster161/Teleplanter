@@ -23,13 +23,5 @@ namespace Pins {
 	const unsigned char USE_24H_MODE = 7;
 }
 
-namespace Configurations {
-	const unsigned char TP101 = 1;
-	const unsigned char TP202 = 2;
-	const unsigned char TP303 = 3;
-  const unsigned char TP404 = 4;
-}
-
-
 
 #endif /* CONSTANTS_H_ */
