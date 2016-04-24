@@ -35,8 +35,10 @@ void MoustureSensor::updateCalibrationValues(){
 
 int MoustureSensor::getValue(){
 	unsigned int val = analogRead(Pins::MOISTURE_SENSOR_PIN);
-
-	return ((val*100)/1024);
+	val = constrain(val, 399, 1023);
+	int soil = map(val, 399, 1023, 100, 0);
+	Serial.println(soil);
+	return (soil);
 }
 
 

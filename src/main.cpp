@@ -10,12 +10,8 @@
 #include "sensors/ThermometerHumidity.h"
 #include "core/Configuration.h"
 #include <Wire.h>  // Comes with Arduino IDE
-// Get the LCD I2C Library here:
-// https://bitbucket.org/fmalpartida/new-liquidcrystal/downloads
-// Move any other LCD libraries to another folder or delete them
-// See Library "Docs" folder for possible commands etc.
 #include <LiquidCrystal_I2C.h>
-
+#include "core/Initialization.h"
 
 //LiquidCrystal_I2C lcd(0x3F);
 //Controls::WaterControl* _waterControl;
@@ -24,9 +20,12 @@ Sensors::ThermometerHumidity* _thermometer;
 //Sensors::Thermometer* _tempSensor;
 Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
+Core::Initialization* _bootstrap;
 //LiquidCrystal_I2C lcd(0x3F);
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
+
+int buttonState =0;
 void printValues() {
   Serial.print("Moisture : ");
   Serial.println(_moistureSensor->getValue());
@@ -43,55 +42,65 @@ void printValues() {
 void setup()
 {
   Serial.begin(9600);
+  _bootstrap = new  Core::Initialization();
   // initialize LED digital pin as an output.
   //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
   _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
   _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
   _leds = new Outputs::Leds();
+  _bootstrap->init(&lcd);
 
-  lcd.begin(16,2);
-
-  for(int i = 0; i< 3; i++)
-  {
-    lcd.backlight();
-    delay(250);
-    lcd.noBacklight();
-    delay(250);
-  }
-  lcd.backlight(); // finish with backlight on
-
-  lcd.setCursor(0,0); //Start at character 4 on line 0
-  lcd.print("Hello, im TP-101");
-
-  delay(3000);
 }
 
 void printValuesToLCD(){
   char buffer[16];
 
+  lcd.backlight();
   lcd.clear();
   sprintf(buffer, "Moisture: %d%%",_moistureSensor->getValue());
+  Serial.print("Moisture : ");
+  Serial.println(_moistureSensor->getValue());
   lcd.setCursor(0,0);
   lcd.print(buffer);
 
   delay(2000);
+  _thermometer->readSensorValues();
   lcd.clear();
   lcd.setCursor(0,0);
   sprintf(buffer, "Temp: %dc",_thermometer->getTemp());
   lcd.print(buffer);
+  Serial.print("Temp:");
+  Serial.println(_thermometer->getTemp());
 
   delay(2000);
   lcd.clear();
   lcd.setCursor(0,0);
   sprintf(buffer, "Humidity: %d%%",_thermometer->getHumidity());
   lcd.print(buffer);
+  Serial.print("Humidity: ");
+  Serial.println(_thermometer->getHumidity());
+  Serial.println("");
   delay(2000);
   lcd.clear();
+  lcd.noBacklight();
 }
 void loop()
 {
-  printValues();
-  printValuesToLCD();
-  delay(2000);
+  //printValues();
+  //printValuesToLCD();
+  //delay(2000);
+  buttonState = digitalRead(Pins::BUTTON_1_PIN);
 
+  if (buttonState == HIGH) {
+    // turn LED on:
+
+    printValuesToLCD();
+
+    // turn LED off:
+  }
+  else {
+
+  }
+
+  delay (1000);
 }
