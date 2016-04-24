@@ -14,7 +14,7 @@ namespace Sensors {
 
 MoustureSensor::MoustureSensor(unsigned int pin) :  BaseSensor (pin, "MoistureSensor") {
 
-	
+
 
 }
 
@@ -35,7 +35,8 @@ void MoustureSensor::updateCalibrationValues(){
 
 int MoustureSensor::getValue(){
 	unsigned int val = analogRead(Pins::MOISTURE_SENSOR_PIN);
-	return val;
+
+	return ((val*100)/1024);
 }
 
 

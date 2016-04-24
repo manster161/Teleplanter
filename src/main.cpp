@@ -5,19 +5,27 @@
 //#include "sensors/thermometer.h"
 #include "core/buttons.h"
 #include "io/Leds.h"
-#include "lib/time/Time.h"
-#include "lib/time/TimeAlarms.h"
+#include <Time.h>
+#include <TimeAlarms.h>
 #include "sensors/ThermometerHumidity.h"
 #include "core/Configuration.h"
+#include <Wire.h>  // Comes with Arduino IDE
+// Get the LCD I2C Library here:
+// https://bitbucket.org/fmalpartida/new-liquidcrystal/downloads
+// Move any other LCD libraries to another folder or delete them
+// See Library "Docs" folder for possible commands etc.
+#include <LiquidCrystal_I2C.h>
 
 
+//LiquidCrystal_I2C lcd(0x3F);
 //Controls::WaterControl* _waterControl;
 Sensors::MoustureSensor* _moistureSensor;
 Sensors::ThermometerHumidity* _thermometer;
 //Sensors::Thermometer* _tempSensor;
 Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
-
+//LiquidCrystal_I2C lcd(0x3F);
+LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
 void printValues() {
   Serial.print("Moisture : ");
@@ -40,39 +48,50 @@ void setup()
   _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
   _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
   _leds = new Outputs::Leds();
-  //_tempSensor = new Sensors::Thermometer(Pins::THERMOMETER_SENSOR_PIN, 15, 25);
-  //Alarm.timerRepeat(Configuration::SERIAL_UPDATE_TIME, printValues);
-  /*myLcd->begin(16, 2);
-  myLcd->home ();                   // go home
-  myLcd->print("Hello, ARDUINO ");
-  myLcd->setCursor ( 0, 1 );        // go to the next line
-  myLcd->print (" WORLD!  ");*/
+
+  lcd.begin(16,2);
+
+  for(int i = 0; i< 3; i++)
+  {
+    lcd.backlight();
+    delay(250);
+    lcd.noBacklight();
+    delay(250);
+  }
+  lcd.backlight(); // finish with backlight on
+
+  lcd.setCursor(0,0); //Start at character 4 on line 0
+  lcd.print("Hello, im TP-101");
+
+  delay(3000);
 }
 
+void printValuesToLCD(){
+  char buffer[16];
+
+  lcd.clear();
+  sprintf(buffer, "Moisture: %d%%",_moistureSensor->getValue());
+  lcd.setCursor(0,0);
+  lcd.print(buffer);
+
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  sprintf(buffer, "Temp: %dc",_thermometer->getTemp());
+  lcd.print(buffer);
+
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  sprintf(buffer, "Humidity: %d%%",_thermometer->getHumidity());
+  lcd.print(buffer);
+  delay(2000);
+  lcd.clear();
+}
 void loop()
 {
-
-
-
-
-    delay(Configuration::SERIAL_UPDATE_TIME);
-
-    //lcd.print("Moisture level:");
-  /*   lcd.setCursor(0, 1);
-    lcd.print(_moistureSensor->getValue(), DEC);
-    delay(Configuration::SERIAL_UPDATE_TIME);
-lcd.setCursor(0, 0);
-    lcd.print("Temperature:");
-    lcd.setCursor(0, 1);
-    lcd.print(_thermometer->getTemp(), DEC);
-    delay(Configuration::SERIAL_UPDATE_TIME);
-    lcd.setCursor(0, 0);
-    lcd.println("Humididty:");
-    lcd.setCursor(0, 1);
-    lcd.print(_thermometer->getHumidity(), DEC);
-    delay(Configuration::SERIAL_UPDATE_TIME);*/
-
-
-    //printValues();
+  printValues();
+  printValuesToLCD();
+  delay(2000);
 
 }

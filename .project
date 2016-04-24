@@ -36,10 +36,5 @@
 			<type>2</type>
 			<location>/Applications/eclipseArduino.app/Contents/Eclipse/arduinoPlugin/packages/arduino/hardware/avr/1.6.10/cores/arduino</location>
 		</link>
-		<link>
-			<name>core/variant</name>
-			<type>2</type>
-			<location>/Applications/eclipseArduino.app/Contents/Eclipse/arduinoPlugin/packages/arduino/hardware/avr/1.6.10/variants/mega</location>
-		</link>
 	</linkedResources>
 </projectDescription>
