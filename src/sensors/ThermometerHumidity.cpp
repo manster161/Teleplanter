@@ -59,7 +59,6 @@ namespace Sensors {
 
     for (int i = 0; i < 4; i++){
       data[i] = readData();
-
     }
     pinMode(Pins::THERMOMETER_SENSOR_PIN,OUTPUT);
     digitalWrite(Pins::THERMOMETER_SENSOR_PIN, HIGH);
