@@ -41,7 +41,7 @@ void printValues() {
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   _bootstrap = new  Core::Initialization();
   // initialize LED digital pin as an output.
   //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
