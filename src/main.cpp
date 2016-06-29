@@ -30,6 +30,7 @@ void printValues() {
   Serial.print("Moisture : ");
   Serial.println(_moistureSensor->getValue());
   Serial.println("");
+  Serial.println("Reading sensor values:");
   _thermometer->readSensorValues();
   Serial.print("Temp:");
   Serial.println(_thermometer->getTemp(), DEC);
@@ -37,20 +38,6 @@ void printValues() {
   Serial.print("Humidity: ");
   Serial.println(_thermometer->getHumidity(), DEC);
   Serial.println("");
-}
-
-void setup()
-{
-  Serial.begin(115200);
-  _bootstrap = new  Core::Initialization();
-  // initialize LED digital pin as an output.
-  //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
-  _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
-  _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
-  _leds = new Outputs::Leds();
-  _bootstrap->init(&lcd);
-
-
 }
 
 void printValuesToLCD(){
@@ -81,23 +68,46 @@ void printValuesToLCD(){
   lcd.clear();
   lcd.noBacklight();
 }
+
+void mainLoop(/* arguments */) {
+  /* code */
+  /* get soil humidity
+  */
+
+  /* get temp */
+  /* get lamp status */
+  printValuesToLCD();
+  Serial.println("Main loop");
+
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  _bootstrap = new  Core::Initialization();
+  // initialize LED digital pin as an output.
+  //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
+  _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
+  _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
+  _leds = new Outputs::Leds();
+  Serial.println("Bootstrap");
+  _bootstrap->init(&lcd);
+
+ Alarm.timerRepeat(10, mainLoop);
+
+}
+
+
+
+
 void loop()
 {
   //printValues();
   //printValuesToLCD();
   //delay(2000);
-  buttonState = digitalRead(Pins::BUTTON_1_PIN);
 
-  if (buttonState == HIGH) {
-    // turn LED on:
 
-    printValuesToLCD();
+  //printValues();
 
-    // turn LED off:
-  }
-  else {
-
-  }
-
-  delay (1000);
+  Alarm.delay(1000);
 }
