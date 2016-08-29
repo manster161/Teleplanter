@@ -10,7 +10,12 @@
 
 namespace  Infrastructure {
 
-  class messageSevice {
+  class MessageService {
+  public:
+    MessageService();
+    ~MessageService();
+    int Post(char[]);
+    char* Get(char[]);
 
 
   };

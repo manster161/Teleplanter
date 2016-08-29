@@ -12,6 +12,7 @@
 #include <Wire.h>  // Comes with Arduino IDE
 #include <LiquidCrystal_I2C.h>
 #include "core/Initialization.h"
+#include "io/Display.h"
 
 //LiquidCrystal_I2C lcd(0x3F);
 //Controls::WaterControl* _waterControl;
@@ -21,6 +22,7 @@ Sensors::ThermometerHumidity* _thermometer;
 Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
 Core::Initialization* _bootstrap;
+Outputs::Display* _display;
 //LiquidCrystal_I2C lcd(0x3F);
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
@@ -90,8 +92,9 @@ void setup()
   _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
   _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
   _leds = new Outputs::Leds();
-  Serial.println("Bootstrap");
-  _bootstrap->init(&lcd);
+  _display = new Outputs::Display();
+
+  _bootstrap->init2(_display);
 
  Alarm.timerRepeat(10, mainLoop);
 

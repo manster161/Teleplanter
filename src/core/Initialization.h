@@ -3,6 +3,7 @@
 
 #include <Wire.h>  // Comes with Arduino IDE
 #include <LiquidCrystal_I2C.h>
+#include "../io/Display.h"
 
 namespace Core {
 
@@ -11,6 +12,7 @@ namespace Core {
       Initialization();
     	virtual ~Initialization();
       virtual void init(LiquidCrystal_I2C*);
+      virtual void init2(Outputs::Display*);
     };
 }
 #endif
