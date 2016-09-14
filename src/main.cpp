@@ -45,30 +45,26 @@ void printValues() {
 void printValuesToLCD(){
   char buffer[16];
 
+  _display->on();
 
-  lcd.backlight();
-  lcd.clear();
   sprintf(buffer, "Moisture: %d%%",_moistureSensor->getValue());
 
-  lcd.setCursor(0,0);
-  lcd.print(buffer);
-  delay(1000);
-
-  lcd.clear();
-  lcd.setCursor(0,0);
-  sprintf(buffer, "Temp: %dc",_thermometer->getTemp());
-  lcd.print(buffer);
+  _display->print(buffer, 0);
 
   delay(1000);
-  lcd.clear();
-  lcd.setCursor(0,0);
+
+
   _thermometer->readSensorValues();
+  sprintf(buffer, "Temp: %dc",_thermometer->getTemp());
+  _display->print(buffer,1);
+
+  //_thermometer->readSensorValues();
   sprintf(buffer, "Humidity: %d%%",_thermometer->getHumidity());
-  lcd.print(buffer);
+  _display->print(buffer,0);
 
   delay(1000);
-  lcd.clear();
-  lcd.noBacklight();
+  _display->off();
+
 }
 
 void mainLoop(/* arguments */) {

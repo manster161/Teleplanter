@@ -19,7 +19,7 @@ namespace Pins {
 
 	const unsigned char MOISTURE_SENSOR_PIN = A0;
 
-	const unsigned char THERMOMETER_SENSOR_PIN = 3;
+	const unsigned char THERMOMETER_SENSOR_PIN = 2;
 	const unsigned char PH_SENSOR_PIN = 5;
 
 	const unsigned char BUTTON_1_PIN = 4;

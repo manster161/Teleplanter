@@ -36,7 +36,7 @@ void Display::debugPrint(String message){
 
 void Display::print(String message, byte row = 0){
   debugPrint(message);
-  Serial.println(message);
+ lcd.clear();
   if (row > 0){
     row = 1;
   }

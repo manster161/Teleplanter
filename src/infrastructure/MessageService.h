@@ -12,11 +12,11 @@ namespace  Infrastructure {
 
   class MessageService {
   public:
-    MessageService();
+    MessageService(long, char*);
     ~MessageService();
-    int Post(char[]);
-    char* Get(char[]);
-
+    virtual int post(char[]);
+    virtual char* get(char[]);
+    virtual int post(float[]);
 
   };
 
