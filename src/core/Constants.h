@@ -24,6 +24,9 @@ namespace Pins {
 
 	const unsigned char BUTTON_1_PIN = 4;
 
+	const unsigned char DATA_RX = 8;
+	const unsigned char DATA_TX = 9;
+		
 	const unsigned char MOISTURE_SENSOR_CALIBRATION_PIN = 10;
 	const unsigned char STANDARD_LED_PIN = 13;
 	const unsigned char USE_HEATER_PIN = 6;

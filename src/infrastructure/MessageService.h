@@ -12,11 +12,13 @@ namespace  Infrastructure {
 
   class MessageService {
   public:
-    MessageService(long, char*);
+    MessageService();
     ~MessageService();
-    virtual int post(char[]);
-    virtual char* get(char[]);
-    virtual int post(float[]);
+    virtual bool reset();
+    virtual bool httpPost(int , int , int );
+    virtual bool connectWiFi();
+    virtual bool init();
+    virtual int post(float, float, float);
 
   };
 

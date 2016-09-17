@@ -13,6 +13,7 @@
 #include <LiquidCrystal_I2C.h>
 #include "core/Initialization.h"
 #include "io/Display.h"
+#include "infrastructure/MessageService.h"
 
 //LiquidCrystal_I2C lcd(0x3F);
 //Controls::WaterControl* _waterControl;
@@ -23,6 +24,7 @@ Inputs::Buttons* _buttons;
 Outputs::Leds* _leds;
 Core::Initialization* _bootstrap;
 Outputs::Display* _display;
+Infrastructure::MessageService* _messageService;
 //LiquidCrystal_I2C lcd(0x3F);
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
@@ -81,18 +83,21 @@ void mainLoop(/* arguments */) {
 
 void setup()
 {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   _bootstrap = new  Core::Initialization();
   // initialize LED digital pin as an output.
   //_waterControl = new Controls::WaterControl(Pins::WATER_CONTROL_PIN);
-  _moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
-  _thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
-  _leds = new Outputs::Leds();
-  _display = new Outputs::Display();
+  //_moistureSensor = new Sensors::MoustureSensor(Pins::MOISTURE_SENSOR_PIN);
+  //_thermometer = new Sensors::ThermometerHumidity(Pins::THERMOMETER_SENSOR_PIN);
+  //_leds = new Outputs::Leds();
+  //_display = new Outputs::Display();
+  _messageService = new Infrastructure::MessageService();
+  //_bootstrap->init2(_display);
+  _messageService->init();
+_messageService->reset();
 
-  _bootstrap->init2(_display);
 
- Alarm.timerRepeat(10, mainLoop);
+  //Alarm.timerRepeat(10, mainLoop);
 
 }
 
